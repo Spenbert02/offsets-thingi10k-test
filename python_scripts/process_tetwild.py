@@ -6,22 +6,39 @@ import concurrent.futures
 import os
 
 
-def process_single_mesh(tetwild_exe, input_path, output_path):
+def rename_first_msh_and_clear(directory : Path, output_name):
+    msh_found = False
+    for p in directory.iterdir():
+        if p.is_file():
+            if p.suffix.lower() == ".msh":
+                target = directory / f"{output_name.name}.msh"
+                p.rename(target)
+                msh_found = True
+            else:
+                p.unlink()
+    return msh_found
+
+
+def process_single_mesh(tetwild_exe, input_path, output_path : Path):
     start_time = time.time()
+    out_dir = output_path.parent
+    if rename_first_msh_and_clear(out_dir, output_path): # previous result found
+        duration = time.time() - start_time
+        return input_path, 0, "", duration
+
     command = [tetwild_exe, "--input", str(input_path), "--output", str(output_path), "--save-mid-result", "2"]
     result = subprocess.run(command, capture_output=True, text=True)
 
     # delete non .msh files in output
-    if not (output_path.parent / f"{output_path.name}.msh").exists():
-        if result.returncode == 0:
-            out_dir = output_path.parent
-            for p in out_dir.iterdir():
-                if p.is_file():
-                    if p.suffix.lower() != ".msh":
-                        p.unlink()
-                    else: # assumes one .msh file in directory
-                        target = out_dir / f"{output_path.name}.msh"
-                        p.rename(target)
+    if result.returncode == 0:
+        out_dir = output_path.parent
+        for p in out_dir.iterdir():
+            if p.is_file():
+                if p.suffix.lower() != ".msh":
+                    p.unlink()
+                else: # assumes one .msh file in directory
+                    target = out_dir / f"{output_path.name}.msh"
+                    p.rename(target)
 
     duration = time.time() - start_time
     return input_path, result.returncode, result.stderr, duration
