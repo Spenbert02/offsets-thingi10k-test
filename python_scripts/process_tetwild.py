@@ -12,15 +12,16 @@ def process_single_mesh(tetwild_exe, input_path, output_path):
     result = subprocess.run(command, capture_output=True, text=True)
 
     # delete non .msh files in output
-    if result.returncode == 0:
-        out_dir = output_path.parent
-        for p in out_dir.iterdir():
-            if p.is_file():
-                if p.suffix.lower() != ".msh":
-                    p.unlink()
-                else: # assumes one .msh file in directory
-                    target = out_dir / f"{output_path.name}.msh"
-                    p.rename(target)
+    if not (output_path.parent / f"{output_path.name}.msh").exists():
+        if result.returncode == 0:
+            out_dir = output_path.parent
+            for p in out_dir.iterdir():
+                if p.is_file():
+                    if p.suffix.lower() != ".msh":
+                        p.unlink()
+                    else: # assumes one .msh file in directory
+                        target = out_dir / f"{output_path.name}.msh"
+                        p.rename(target)
 
     duration = time.time() - start_time
     return input_path, result.returncode, result.stderr, duration
