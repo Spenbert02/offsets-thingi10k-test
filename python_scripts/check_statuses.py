@@ -20,7 +20,7 @@ def scan_directories(log_fpath, cache_dir):
                 model_id = int(parts[5].split("_")[1].split(".")[0])
                 if parts[4][1:-1] == "SUCCESS":
                     success_ids.add(model_id)
-                elif parts[4][1:-1] == "FAILURE":
+                elif parts[4][1:-1] == "FAILED":
                     fail_ids.add(model_id)
     
     # set stuff
