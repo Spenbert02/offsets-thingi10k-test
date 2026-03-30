@@ -31,6 +31,7 @@ def scan_directories(log_fpath, cache_dir):
     print("incomplete ids:", end="")
     for inc_id in incomplete_ids:
         print(f" {inc_id}", end="")
+    print()
 
 
 if __name__ == "__main__":
