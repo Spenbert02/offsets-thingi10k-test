@@ -19,9 +19,14 @@ def check_subdirs(mesh_dir):
 
         twild_out_path = subdir / "tetwild_output"
         if twild_out_path.exists():
-            msh_path = twild_out_path / f"model_{model_id}_tetwild_output.msh"
-            if msh_path.exists():
-                counts["completed"] += 1
+            # msh_path = twild_out_path / f"model_{model_id}_tetwild_output.msh"
+            # if msh_path.exists():
+            #     counts["completed"] += 1
+            for p in twild_out_path.iterdir():
+                if p.is_file():
+                    if p.suffix.lower() == ".msh":
+                        counts["completed"] += 1
+                        break
     print(f"{counts['completed']} / {counts['total']} completed ({counts['total'] - counts['completed']} remaining)")
 
 
