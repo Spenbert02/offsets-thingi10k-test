@@ -34,7 +34,7 @@ def check_subdirs(mesh_dir):
                 counts["unprocessed"] += 1
         else:
             counts["unprocessed"] += 1
-    for key, val in counts:
+    for key, val in counts.items():
         print(f"{key} : {val}")
 
 
