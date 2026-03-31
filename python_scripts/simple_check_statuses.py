@@ -5,7 +5,7 @@ from pathlib import Path
 def check_subdirs(mesh_dir):
     print("Scanning subdirectories...")
     mesh_dir_path = Path(mesh_dir)
-    counts = {"total": 0, "completed": 0}
+    counts = {"total": 0, "tw completed": 0, "renamed": 0, "retagged": 0, "unprocessed": 0}
     for subdir in mesh_dir_path.glob("model_*"):
         if not (subdir.exists() and subdir.is_dir()):
             continue
@@ -19,15 +19,23 @@ def check_subdirs(mesh_dir):
 
         twild_out_path = subdir / "tetwild_output"
         if twild_out_path.exists():
-            # msh_path = twild_out_path / f"model_{model_id}_tetwild_output.msh"
-            # if msh_path.exists():
-            #     counts["completed"] += 1
-            for p in twild_out_path.iterdir():
-                if p.is_file():
-                    if p.suffix.lower() == ".msh":
-                        counts["completed"] += 1
-                        break
-    print(f"{counts['completed']} / {counts['total']} completed ({counts['total'] - counts['completed']} remaining)")
+            retag_path = twild_out_path / f"model_{model_id}_tetwild_output_retagged.msh"
+            if retag_path.exists():
+                counts["retagged"] += 1
+                continue
+            renamed_path = twild_out_path / f"model_{model_id}_tetwild_output.msh"
+            if renamed_path.exists():
+                counts["renamed"] += 1
+                continue
+            twild_outfiles = list(twild_out_path.glob("*.msh"))
+            if len(twild_outfiles) > 0:
+                counts["tw completed"] += 1
+            else:
+                counts["unprocessed"] += 1
+        else:
+            counts["unprocessed"] += 1
+    for key, val in counts:
+        print(f"{key} : {val}")
 
 
 if __name__ == "__main__":
