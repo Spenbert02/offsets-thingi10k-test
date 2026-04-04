@@ -2,7 +2,10 @@
 #SBATCH --job-name=tetwild_sweep
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --time=12:00:00           
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=64G
+#SBATCH --time=12:00:00
+#SBATCH --account=torch_pr_870_general        
 #SBATCH --output=logs/job_%A_%a.out 
 #SBATCH --error=logs/job_%A_%a.err
 
