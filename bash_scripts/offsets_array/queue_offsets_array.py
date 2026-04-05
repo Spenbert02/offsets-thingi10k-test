@@ -75,7 +75,6 @@ def main():
         except FileNotFoundError:
             print("Error: 'sbatch' command not found. Are you running this on the HPC login node?")
             break
-    print("All chunks successfully queued")
 
 
 if __name__ == "__main__":
