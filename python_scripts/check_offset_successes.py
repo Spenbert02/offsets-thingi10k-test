@@ -18,9 +18,14 @@ def main():
             continue
 
         counts["total"] += 1
+
         single_out_path = subdir / "singlebody" / f"model_{model_id}_singlebody_offset_output.msh"
         if single_out_path.exists():
             counts["success"] += 1
+        
+        twobody_out_path = subdir / "twobody" / f"model_{model_id}_twobody_offset_output.msh"
+        if twobody_out_path.exists():
+            counts['success'] += 1
     
     print(f"Offsets progress: {counts['success']} / {counts['total']} successes")
 
