@@ -6,6 +6,7 @@ mesh_dir = "/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
 run_list_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/offsets_array/pending_jobs.txt"
 slurm_script_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/offsets_array/offset_submit_array.slurm"
 RERUN_ALL = False
+CHUNK_SIZE = 1000
 
 def main():
     mesh_dir_path = Path(mesh_dir)
@@ -55,18 +56,26 @@ def main():
     
     num_jobs = len(jsons_to_run)
     print(f"Found {num_jobs} offset jobs to run")
-
-    slurm_script_path = Path(slurm_script_fpath)
-    # sbatch_cmd = ["sbatch", f"--array=0-{num_jobs - 1}%50", str(slurm_script_path), str(run_list_path)]
-    sbatch_cmd = ["sbatch", f"--array=0-999", str(slurm_script_path), str(run_list_path)]
-    print(f"Submitting SLURM array: {' '.join(sbatch_cmd)}")
-    try:
-        subprocess.run(sbatch_cmd, check=True)
-        print("Offset jobs successfully committed to queue")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to submit jobs. Error: {e}")
-    except FileNotFoundError:
-        print("Error: 'sbatch' command not found. Are you running this on the HPC login node?")
+    chunks = [jsons_to_run[i:i + CHUNK_SIZE] for i in range(0, num_jobs, CHUNK_SIZE)]
+    for idx, chunk in enumerate(chunks):
+        chunk_file = run_list_path.with_name(f"pending_jobs_{idx}.txt")
+        with open(chunk_file, "w") as f:
+            for json_path in chunk:
+                f.write(f"{json_path}\n")
+        arr_max = len(chunk) - 1
+        slurm_script_path = Path(slurm_script_fpath)
+        sbatch_cmd = ["sbatch", f"--array=0-{arr_max}", str(slurm_script_path), str(chunk_file)]
+        print(f"Submitting chunk {idx+1}/{len(chunks)}: {' '.join(sbatch_cmd)}")
+        try:
+            subprocess.run(sbatch_cmd, check=True)
+            print(f"Chunk {idx+1}/{len(chunks)} successfully committed to queue")
+        except subprocess.CalledProcessError as e:
+            print(f"Failed to submit chunk {idx}. Error: {e}")
+            break
+        except FileNotFoundError:
+            print("Error: 'sbatch' command not found. Are you running this on the HPC login node?")
+            break
+    print("All chunks successfully queued")
 
 
 if __name__ == "__main__":
