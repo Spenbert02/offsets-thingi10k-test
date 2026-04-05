@@ -23,3 +23,7 @@ def main():
             counts["success"] += 1
     
     print(f"Offsets progress: {counts['success']} / {counts['total']} successes")
+
+
+if __name__ == "__main__":
+    main()
