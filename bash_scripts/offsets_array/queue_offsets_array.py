@@ -57,7 +57,7 @@ def main():
     print(f"Found {num_jobs} offset jobs to run")
 
     slurm_script_path = Path(slurm_script_fpath)
-    sbatch_cmd = ["sbatch", f"--array=0-{num_jobs - 1}", str(slurm_script_path), str(run_list_path)]
+    sbatch_cmd = ["sbatch", f"--array=0-{num_jobs - 1}%100", str(slurm_script_path), str(run_list_path)]
     print(f"Submitting SLURM array: {' '.join(sbatch_cmd)}")
     try:
         subprocess.run(sbatch_cmd, check=True)

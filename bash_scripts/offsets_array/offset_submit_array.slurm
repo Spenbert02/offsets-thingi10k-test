@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=tetwild_sweep
+#SBATCH --job-name=offsets_sweep
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
