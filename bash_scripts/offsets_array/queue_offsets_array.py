@@ -25,7 +25,7 @@ def main():
 
         input_msh_path = subdir / "tetwild_output" / f"model_{model_id}_tetwild_output_retagged.msh"
         if not input_msh_path.exists():
-            print("WARNING: no retagged tetwild output for model {model_id}")
+            print(f"WARNING: no retagged tetwild output for model {model_id}")
             continue
 
         singlebody_output_msh_path = subdir / "singlebody" / f"model_{model_id}_singlebody_offset_output.msh"
