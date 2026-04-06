@@ -17,7 +17,7 @@ def main():
             print(f"WARNING: non-int model id at {str(subdir)}")
             continue
 
-        counts["total"] += 2
+        counts["total"] += 1
 
         oriented_out_path = subdir / "orient_output" / f"model_{model_id}_oriented.obj"
         if oriented_out_path.exists():
