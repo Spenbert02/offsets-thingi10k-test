@@ -21,7 +21,7 @@ def main():
             model_id = int(name[1])
             body = name[0]
             if model_id == MODEL_ID and ((body == "singlebody") if SINGLEBODY else (body == "twobody")):
-                jobs.append(p.name.split("_")[1:3])
+                jobs.append([p.name.split("_")[1], p.name.split("_")[2].split(".")[0]])
     print(f"Found logs: ",end="")
     print([f"{ids[0]}_{ids[1]}" for ids in jobs])
     for job in jobs:
