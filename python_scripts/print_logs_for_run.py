@@ -8,7 +8,6 @@ SINGLEBODY = True
 
 def main():
     logs_dir_path = Path(logs_dir)
-    id_str = ""
     jobs = []
     for p in logs_dir_path.iterdir():
         if not (p.is_file() and p.suffix.lower() == ".out"):
@@ -22,7 +21,8 @@ def main():
             body = name[0]
             if model_id == MODEL_ID and ((body == "singlebody") if SINGLEBODY else (body == "twobody")):
                 jobs.append([p.name.split("_")[1:3]])
-
+    print(f"Found logs: ",end="")
+    print([f"{ids[0]}_{ids[1]}" for ids in jobs])
     for job in jobs:
         out_path = logs_dir_path / f"job_{job[0]}_{job[1]}.out"
         print("========================")
