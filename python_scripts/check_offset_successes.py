@@ -17,7 +17,7 @@ def main():
             print(f"WARNING: non-int model id at {str(subdir)}")
             continue
 
-        counts["total"] += 1
+        counts["total"] += 2
 
         single_out_path = subdir / "singlebody" / f"model_{model_id}_singlebody_offset_output.msh"
         if single_out_path.exists():
