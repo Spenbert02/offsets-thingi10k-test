@@ -14,6 +14,7 @@ def main():
         raise FileNotFoundError(f"{str(mesh_dir_path)} does not exist")
 
     jsons_to_run = []
+    successes = 0
     for subdir in mesh_dir_path.glob("model_*"):
         if not (subdir.exists() and subdir.is_dir()):
             continue
@@ -31,7 +32,8 @@ def main():
 
         singlebody_output_msh_path = subdir / "singlebody" / f"model_{model_id}_singlebody_offset_output.msh"
         if singlebody_output_msh_path.exists() and not RERUN_ALL:
-            print(f"Model {model_id} (single body) already succesfully offset.")
+            successes += 1
+            # print(f"Model {model_id} (single body) already succesfully offset.")
         else:
             singlebody_json_path = subdir / "singlebody" / f"singlebody_{model_id}_offset.json"
             if not singlebody_json_path.exists():
@@ -41,14 +43,15 @@ def main():
         
         twobody_output_msh_path = subdir / "twobody" / f"model_{model_id}_twobody_offset_output.msh"
         if twobody_output_msh_path.exists() and not RERUN_ALL:
-            print(f"Model {model_id} (two body) already succesfully offset.")
+            successes += 1
+            # print(f"Model {model_id} (two body) already succesfully offset.")
         else:
             twobody_json_path = subdir / "twobody" / f"twobody_{model_id}_offset.json"
             if not twobody_json_path.exists():
                 print(f"WARNING: twobody json {str(twobody_json_path)} does not exist")
             else:
                 jsons_to_run.append(str(twobody_json_path))
-
+    print(f"{successes} models already successfully offset.")
     run_list_path = Path(run_list_fpath)
     
     num_jobs = len(jsons_to_run)
