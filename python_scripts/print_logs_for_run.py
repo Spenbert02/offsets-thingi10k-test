@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 
 logs_dir = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/offsets_array/logs"
@@ -17,6 +18,8 @@ def main():
             f.readline()
             f.readline()
             name = Path(f.readline().split(" ")[2]).name.split("_")
+            print(name)
+            sys.exit(0)
             model_id = name[1]
             body = name[0]
             if model_id == MODEL_ID and ((body == "singlebody") if SINGLEBODY else (body == "twobody")):
