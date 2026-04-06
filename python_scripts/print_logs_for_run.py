@@ -18,9 +18,7 @@ def main():
             f.readline()
             f.readline()
             name = Path(f.readline().split(" ")[2]).name.split("_")
-            print(name)
-            sys.exit(0)
-            model_id = name[1]
+            model_id = int(name[1])
             body = name[0]
             if model_id == MODEL_ID and ((body == "singlebody") if SINGLEBODY else (body == "twobody")):
                 jobs.append([p.name.split("_")[1:3]])
