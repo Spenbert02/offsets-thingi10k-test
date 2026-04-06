@@ -50,9 +50,6 @@ def main():
                 jsons_to_run.append(str(twobody_json_path))
 
     run_list_path = Path(run_list_fpath)
-    with open(str(run_list_path), "w") as f:
-        for json_fpath in jsons_to_run:
-            f.write(f"{json_fpath}\n")
     
     num_jobs = len(jsons_to_run)
     print(f"Found {num_jobs} offset jobs to run")
