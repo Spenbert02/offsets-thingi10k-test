@@ -19,7 +19,7 @@ def main():
 
         counts["total"] += 2
 
-        oriented_out_path = subdir / "orient_output" / f"model_{model_id}_oriented"
+        oriented_out_path = subdir / "orient_output" / f"model_{model_id}_oriented.obj"
         if oriented_out_path.exists():
             counts["success"] += 1
     print(f"{counts['success']} / {counts['total']} models oriented")
