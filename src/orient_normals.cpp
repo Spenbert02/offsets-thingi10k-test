@@ -25,11 +25,11 @@ int main(int argc, char *argv[])
     // Assign arguments to variables
     std::string input_obj_fpath = argv[1];
     fs::path input_obj_path(input_obj_fpath);
-    std::cout << "Processing meshes from: " << input_obj_fpath << std::endl;
+    std::cout << "Input mesh: " << input_obj_fpath << std::endl;
 
     std::string output_obj_fpath = argv[2];
     fs::path output_obj_path(output_obj_fpath);
-    std::cout << "Using curves from: " << output_obj_fpath << std::endl;
+    std::cout << "Output mesh: " << output_obj_fpath << std::endl;
 
     Eigen::MatrixXd V;
     Eigen::MatrixXi F;

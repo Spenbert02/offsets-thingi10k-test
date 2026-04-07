@@ -3,3 +3,4 @@
 test_data/
 misc.txt
 build/
+bash_scripts/**/logs/

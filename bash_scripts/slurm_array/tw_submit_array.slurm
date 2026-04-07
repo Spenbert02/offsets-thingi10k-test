@@ -20,7 +20,7 @@ LINE_NUM=$((SLURM_ARRAY_TASK_ID + 1))
 MODEL_ID=$(sed -n "${LINE_NUM}p" "$RUN_LIST")
 
 # Construct the exact paths requested
-INPUT_OBJ="${BASE_DIR}/model_${MODEL_ID}/model_${MODEL_ID}.obj"
+INPUT_OBJ="${BASE_DIR}/model_${MODEL_ID}/orient_output/model_${MODEL_ID}_oriented.obj"
 OUT_DIR="${BASE_DIR}/model_${MODEL_ID}/tetwild_output"
 OUTPUT_PREFIX="${OUT_DIR}/model_${MODEL_ID}_tetwild_output"
 
