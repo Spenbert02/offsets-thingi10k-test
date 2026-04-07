@@ -8,6 +8,7 @@ slurm_script_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi1
 RERUN_ALL = False
 CHUNK_SIZE = 1000
 
+
 def main():
     mesh_dir_path = Path(mesh_dir)
     if not (mesh_dir_path.exists() and mesh_dir_path.is_dir()):
