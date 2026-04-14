@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=32G
-#SBATCH --time=12:00:00
+#SBATCH --time=0:30:00
 #SBATCH --account=torch_pr_870_general
 #SBATCH --output=logs/job_%A_%a.out 
 #SBATCH --error=logs/job_%A_%a.err
