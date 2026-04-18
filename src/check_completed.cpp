@@ -179,7 +179,10 @@ int main(int argc, char *argv[])
 
         // actually update outcome
         outcomes[key] = classification;
-        std::cout << "\r" << ++processed_count << std::flush;
+        if (++processed_count % 100 == 0)
+        {
+            std::cout << "\r" << ++processed_count << std::flush;
+        }
     }
 
     // collect outputs
@@ -201,27 +204,27 @@ int main(int argc, char *argv[])
     std::cout << "====== FINDINGS ======" << std::endl;
     std::cout << "total runs (sanity check): " << outcome_sets[EMPTY].size() + outcome_sets[INVERTED_INPUT].size() + outcome_sets[SPLIT_FAILED].size() + outcome_sets[TIMEOUT].size() + outcome_sets[COMPLETED].size() + outcome_sets[OTHER].size() << std::endl;
     std::cout << "# successes: " << outcome_sets[COMPLETED].size() << std::endl;
-    std::cout << "# empty inputs: " << outcome_sets[EMPTY].size();
+    std::cout << "# empty inputs: " << outcome_sets[EMPTY].size() << std::endl;
     for (const auto &pair : outcome_sets[EMPTY])
     {
         std::cout << "\t" << pair.first << " " << pair.second << "body" << std::endl;
     }
-    std::cout << "# inverted inputs: " << outcome_sets[INVERTED_INPUT].size();
+    std::cout << "# inverted inputs: " << outcome_sets[INVERTED_INPUT].size() << std::endl;
     for (const auto &pair : outcome_sets[INVERTED_INPUT])
     {
         std::cout << "\t" << pair.first << " " << pair.second << "body" << std::endl;
     }
-    std::cout << "# failed splits: " << outcome_sets[SPLIT_FAILED].size();
+    std::cout << "# failed splits: " << outcome_sets[SPLIT_FAILED].size() << std::endl;
     for (const auto &pair : outcome_sets[SPLIT_FAILED])
     {
         std::cout << "\t" << pair.first << " " << pair.second << "body" << std::endl;
     }
-    std::cout << "# timeouts: " << outcome_sets[TIMEOUT].size();
+    std::cout << "# timeouts: " << outcome_sets[TIMEOUT].size() << std::endl;
     for (const auto &pair : outcome_sets[TIMEOUT])
     {
         std::cout << "\t" << pair.first << " " << pair.second << "body" << std::endl;
     }
-    std::cout << "other result (debugging): " << outcome_sets[OTHER].size();
+    std::cout << "other result (debugging): " << outcome_sets[OTHER].size() << std::endl;
     for (const auto &pair : outcome_sets[OTHER])
     {
         std::cout << "\t" << pair.first << " " << pair.second << "body" << std::endl;
