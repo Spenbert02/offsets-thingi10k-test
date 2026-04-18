@@ -53,7 +53,7 @@ def main():
                 "output": f"model_{model_id}_twobody_big_offset_output",
                 "offset_tags": [ [0, 0], [0, 1] ],
                 "offset_tag_val": [ [0, 2] ],
-                "target_distance": 1.0,
+                "target_distance": 10.0,
                 "relative_ball_threshold": 0.01,
                 "save_vtu": False,
                 "DEBUG_output": False,
