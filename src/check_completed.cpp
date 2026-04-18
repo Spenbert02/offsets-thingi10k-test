@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
                 classification = INVERTED_INPUT;
                 break;
             }
-            if (line.find("tet split failed!") != std::string::npos)
+            if (line.find("split failed!") != std::string::npos)
             {
                 classification = SPLIT_FAILED;
                 break;
