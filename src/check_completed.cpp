@@ -149,6 +149,7 @@ int main(int argc, char *argv[])
             if (line.find("======= finish =========") != std::string::npos)
             {
                 classification = COMPLETED;
+                break;
             }
         }
         outfile.close();
@@ -178,7 +179,7 @@ int main(int argc, char *argv[])
 
         // actually update outcome
         outcomes[key] = classification;
-        std::cout << "\r" << ++processed_count;
+        std::cout << "\r" << ++processed_count << std::flush;
     }
 
     // collect outputs
