@@ -21,7 +21,7 @@ bool get_job_ids(const std::string &fname, int &job_id, int &job_sub_id)
 
 bool get_model_info(std::string line, int &model_id, int &body)
 {
-    body = (line.find("/singlebody/") != std::string::npos) ? 1 : 2;
+    body = (line.find("singlebody") != std::string::npos) ? 1 : 2;
 
     std::size_t start = line.find("model_");
     if (start == std::string::npos)
