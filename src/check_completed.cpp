@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
     // track: empty input, inverted element in input, timeout, completed, other
     std::map<std::pair<int, int>, int> outcomes;
 
+    int processed_count = 0;
     for (const auto &entry : fs::directory_iterator(logs_dir))
     {
         if (!entry.is_regular_file())
@@ -177,6 +178,7 @@ int main(int argc, char *argv[])
 
         // actually update outcome
         outcomes[key] = classification;
+        std::cout << "\r" << ++processed_count;
     }
 
     // collect outputs
