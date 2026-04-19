@@ -10,6 +10,7 @@ namespace fs = std::filesystem;
 const int SPLIT_FAILED = 0;
 const int COMPLETED = 1;
 const int OTHER = 2;
+const int MANIFOLD_CHECK_FAIL = 3;
 
 bool get_job_ids(const std::string &fname, int &job_id, int &job_sub_id)
 {
@@ -128,6 +129,11 @@ int main(int argc, char *argv[])
 
         while (std::getline(outfile, line))
         {
+            if (line.find("Extracted surface is not manifold") != std::string::npos)
+            {
+                classification = MANIFOLD_CHECK_FAIL;
+                break;
+            }
             if (line.find("split failed!") != std::string::npos)
             {
                 classification = SPLIT_FAILED;
@@ -177,6 +183,7 @@ int main(int argc, char *argv[])
     outcome_sets[SPLIT_FAILED];
     outcome_sets[COMPLETED];
     outcome_sets[OTHER];
+    outcome_sets[MANIFOLD_CHECK_FAIL];
     for (const auto pair : outcomes)
     {
         auto key = pair.first;
@@ -186,16 +193,24 @@ int main(int argc, char *argv[])
 
     // print findings
     std::cout << "====== FINDINGS ======" << std::endl;
-    std::cout << "total runs (sanity check): " << outcome_sets[SPLIT_FAILED].size() + outcome_sets[COMPLETED].size() + outcome_sets[OTHER].size() << std::endl;
+    std::cout << "total runs (sanity check): " << outcome_sets[MANIFOLD_CHECK_FAIL].size() + outcome_sets[SPLIT_FAILED].size() + outcome_sets[COMPLETED].size() + outcome_sets[OTHER].size() << std::endl;
     std::cout << "# successes: " << outcome_sets[COMPLETED].size() << std::endl;
+    std::cout << "# manifold checks failed: " << outcome_sets[MANIFOLD_CHECK_FAIL].size() << std::endl;
+    for (const auto &pair : outcome_sets[MANIFOLD_CHECK_FAIL])
+    {
+        std::string mode_str = (pair.second == 0) ? "union" : "subtract";
+        std::cout << "\t" << pair.first << " " << mode_str << std::endl;
+    }
     std::cout << "# failed splits: " << outcome_sets[SPLIT_FAILED].size() << std::endl;
     for (const auto &pair : outcome_sets[SPLIT_FAILED])
     {
-        std::cout << "\t" << pair.first << " " << pair.second << "body" << std::endl;
+        std::string mode_str = (pair.second == 0) ? "union" : "subtract";
+        std::cout << "\t" << pair.first << " " << mode_str << std::endl;
     }
     std::cout << "other result (debugging): " << outcome_sets[OTHER].size() << std::endl;
     for (const auto &pair : outcome_sets[OTHER])
     {
-        std::cout << "\t" << pair.first << " " << pair.second << "body" << std::endl;
+        std::string mode_str = (pair.second == 0) ? "union" : "subtract";
+        std::cout << "\t" << pair.first << " " << mode_str << std::endl;
     }
 }
