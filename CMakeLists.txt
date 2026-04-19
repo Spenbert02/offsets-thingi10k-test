@@ -17,6 +17,7 @@ target_include_directories(orient_obj PRIVATE include)
 
 # add_executable(rename_logs src/rename_logs.cpp)
 add_executable(check_completed src/check_completed.cpp)
+add_executable(manifold_check_completed src/manifold_check_completed.cpp)
 
 # Optimization: Ensure we build in Release mode by default for speed
 if(NOT CMAKE_BUILD_TYPE)
