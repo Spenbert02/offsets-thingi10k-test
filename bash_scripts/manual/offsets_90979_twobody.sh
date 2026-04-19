@@ -3,8 +3,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=32G
-#SBATCH --time=12:00:00
+#SBATCH --mem=64G
+#SBATCH --time=4:00:00
 #SBATCH --account=torch_pr_870_general
 #SBATCH --output=logs/job_%j_0.out 
 #SBATCH --error=logs/job_%j_0.err
