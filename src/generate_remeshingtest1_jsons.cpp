@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
         j["smooth_without_envelope"] = false;
         j["num_threads"] = 0;
         j["write_vtu"] = true;
-        j["debug_output"] = false;
+        j["debug_output"] = true;
         j["output"] = "model_" + std::to_string(model_id) + "_out";
 
         fs::path json_path(remeshing_test1_dir / ("remeshing_test1_" + std::to_string(model_id) + ".json"));
