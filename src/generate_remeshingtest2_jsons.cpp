@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         j["debug_output"] = true;
         j["output"] = "model_" + std::to_string(model_id) + "_out";
 
-        fs::path json_path(remeshing_test2_dir / ("remeshing_test1_" + std::to_string(model_id) + ".json"));
+        fs::path json_path(remeshing_test2_dir / ("remeshing_test2_" + std::to_string(model_id) + ".json"));
         std::ofstream out(json_path.string());
         out << j.dump(4) << std::endl;
 
