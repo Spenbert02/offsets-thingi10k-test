@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=remeshing_test1_sweep
+#SBATCH --job-name=remeshing_test2_sweep
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
