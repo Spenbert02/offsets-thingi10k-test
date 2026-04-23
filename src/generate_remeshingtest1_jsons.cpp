@@ -5,32 +5,11 @@
 #include <Eigen/Core>
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include "utils.hpp"
 
 namespace fs = std::filesystem;
 using namespace Eigen;
 using json = nlohmann::json;
-
-bool get_model_id(const std::string &name, int &id)
-{
-    std::size_t start = name.find("model_");
-    if (start == std::string::npos)
-    {
-        return false;
-    }
-
-    start += 6;
-    std::size_t end = start;
-    while (end < name.size() && std::isdigit(static_cast<unsigned char>(name[end])))
-    {
-        ++end;
-    }
-    if (start == end)
-    {
-        return false;
-    }
-    id = std::stoi(name.substr(start, end - start));
-    return true;
-}
 
 /**
  * @brief usage: ./generate_remeshingtest1_jsons <model_dir>
@@ -112,7 +91,7 @@ int main(int argc, char *argv[])
         j["w_ampis"] = 1e-4;
         j["stop_energy"] = 10;
         j["smooth_without_envelope"] = false;
-        j["num_threads"] = 0;
+        j["num_threads"] = 12;
         j["write_vtu"] = true;
         j["debug_output"] = true;
         j["output"] = "model_" + std::to_string(model_id) + "_out";
@@ -123,7 +102,7 @@ int main(int argc, char *argv[])
 
         if ((++created_count) % 100 == 0)
         {
-            std::cout << "\r" << created_count << "\t";
+            std::cout << "\r" << created_count << "\t" << std::flush;
         }
     }
     std::cout << std::endl
