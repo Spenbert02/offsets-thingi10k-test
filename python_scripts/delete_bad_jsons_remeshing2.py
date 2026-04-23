@@ -17,10 +17,10 @@ def main():
             print(f"WARNING: non-int model id at {str(subdir)}")
             continue
 
-        remeshing_2_outidr = subdir / "remeshing_test2"
-        if remeshing_2_outidr.exists():
-            for p in remeshing_2_outidr.iterdir():
-                if p.suffix.lower == ".json":
+        remeshing_2_outdir = subdir / "remeshing_test2"
+        if remeshing_2_outdir.exists():
+            for p in remeshing_2_outdir.iterdir():
+                if p.suffix.lower() == ".json":
                     p.unlink()
                     cleared_count += 1
     
