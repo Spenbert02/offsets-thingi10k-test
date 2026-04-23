@@ -25,6 +25,10 @@ add_executable(generate_remeshingtest1_jsons src/generate_remeshingtest1_jsons.c
 target_link_libraries(generate_remeshingtest1_jsons PRIVATE mshio::mshio Eigen3::Eigen igl::core nlohmann_json::nlohmann_json)
 target_include_directories(generate_remeshingtest1_jsons PRIVATE include)
 
+add_executable(generate_remeshingtest2_jsons src/generate_remeshingtest2_jsons.cpp)
+target_link_libraries(generate_remeshingtest2_jsons PRIVATE nlohmann_json::nlohmann_json)
+target_include_directories(generate_remeshingtest2_jsons PRIVATE include)
+
 # Optimization: Ensure we build in Release mode by default for speed
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
