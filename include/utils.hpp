@@ -27,13 +27,20 @@ bool get_model_id(const std::string &name, int &id)
     return true;
 }
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
 bool get_max_energy_from_log(const fs::path &log, double &ret_energy)
 {
     std::ifstream f(log.string());
     if (!f.is_open())
     {
-        std::string errstr = "Could not open log file " + log.string();
-        throw std::runtime_error(errstr);
+        throw std::runtime_error("Could not open log file " + log.string());
     }
 
     std::string line;
@@ -41,22 +48,25 @@ bool get_max_energy_from_log(const fs::path &log, double &ret_energy)
     {
         if (line.empty())
             continue;
-        size_t colon_pos = line.find(":");
-        if (colon_pos == std::string::npos)
-            continue;
-        std::string key = line.substr(0, colon_pos);
-        key.erase(std::remove_if(key.begin(), key.end(), ::isspace), key.end());
-        if (key == "max_energy")
+
+        std::stringstream ss(line);
+        std::string key;
+
+        if (std::getline(ss, key, ':'))
         {
-            std::string value_str = line.substr(colon_pos + 1);
-            try
-            {
-                ret_energy = std::stod(value_str);
-                return true;
-            }
-            catch (const std::exception &e)
-            {
+            auto first = key.find_first_not_of(" \t\r\n");
+            auto last = key.find_last_not_of(" \t\r\n");
+
+            if (first == std::string::npos)
                 continue;
+            std::string trimmed_key = key.substr(first, (last - first + 1));
+
+            if (trimmed_key == "max_energy")
+            {
+                if (ss >> ret_energy)
+                {
+                    return true;
+                }
             }
         }
     }
