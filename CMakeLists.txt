@@ -9,15 +9,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(EIGEN3_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/eigen")
 add_subdirectory(external/eigen)
 add_subdirectory(external/libigl)
+add_subdirectory(external/MshIO)
+add_subdirectory(external/json EXCLUDE_FROM_ALL)
 
-# Define the executable and its source files
+# EXECUTABLES
 add_executable(orient_obj src/orient_normals.cpp)
 target_link_libraries(orient_obj PRIVATE igl::core Eigen3::Eigen)
 target_include_directories(orient_obj PRIVATE include)
 
-# add_executable(rename_logs src/rename_logs.cpp)
 add_executable(check_completed src/check_completed.cpp)
+
 add_executable(manifold_check_completed src/manifold_check_completed.cpp)
+
+add_executable(generate_remeshingtest1_jsons src/generate_remeshingtest1_jsons.cpp)
+target_link_libraries(generate_remeshingtest1_jsons PRIVATE mshio::mshio Eigen3::Eigen igl::core nlohmann_json::nlohmann_json)
+target_include_directories(generate_remeshingtest1_jsons PRIVATE include)
 
 # Optimization: Ensure we build in Release mode by default for speed
 if(NOT CMAKE_BUILD_TYPE)
