@@ -1,0 +1,31 @@
+from pathlib import Path
+
+
+mesh_dir = "/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
+
+
+def main():
+    mesh_dir_path = Path(mesh_dir)
+    cleared_count = 0
+    for subdir in mesh_dir_path.glob("model_*"):
+        if not (subdir.exists() and subdir.is_dir()):
+            continue
+
+        try:
+            model_id = int(subdir.name.split("_")[1])
+        except:
+            print(f"WARNING: non-int model id at {str(subdir)}")
+            continue
+
+        remeshing_2_outidr = subdir / "remeshing_test2"
+        if remeshing_2_outidr.exists():
+            for p in remeshing_2_outidr.iterdir():
+                if p.suffix.lower == ".json":
+                    p.unlink()
+                    cleared_count += 1
+    
+    print(f"{cleared_count} bad jsons cleared.")
+
+
+if __name__ == "__main__":
+    main()
