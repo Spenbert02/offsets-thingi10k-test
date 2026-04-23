@@ -8,6 +8,9 @@
 #SBATCH --account=torch_pr_870_general
 #SBATCH --output=logs/job_%A_%a.out 
 #SBATCH --error=logs/job_%A_%a.err
+#SBATCH --mailtype=BEGIN,END,FAIL,REQUEUE
+#SBATCH --mailuser=seb9449@nyu.edu
+
 
 # UPDATE THIS to match the base directory in your python script
 BASE_DIR="/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
