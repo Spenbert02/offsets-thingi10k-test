@@ -29,6 +29,9 @@ add_executable(generate_remeshingtest2_jsons src/generate_remeshingtest2_jsons.c
 target_link_libraries(generate_remeshingtest2_jsons PRIVATE nlohmann_json::nlohmann_json)
 target_include_directories(generate_remeshingtest2_jsons PRIVATE include)
 
+add_executable(check_remeshing_test1_completed src/check_remeshing_test1_completed.cpp)
+target_include_directories(check_remeshing_test1_completed PRIVATE include)
+
 # Optimization: Ensure we build in Release mode by default for speed
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
