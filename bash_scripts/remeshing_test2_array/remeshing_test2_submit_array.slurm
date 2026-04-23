@@ -8,8 +8,8 @@
 #SBATCH --account=torch_pr_870_general
 #SBATCH --output=logs/job_%A_%a.out 
 #SBATCH --error=logs/job_%A_%a.err
-#SBATCH --mailtype=BEGIN,END,FAIL,REQUEUE
-#SBATCH --mailuser=seb9449@nyu.edu
+#SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE
+#SBATCH --mail-user=seb9449
 
 
 # UPDATE THIS to match the base directory in your python script
