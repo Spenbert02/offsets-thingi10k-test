@@ -64,12 +64,12 @@ int main(int argc, char *argv[])
         input_array.push_back(oriented_obj_path.string());
         j["input"] = input_array;
         j["eps_rel"] = 1e-2;
-        j["w_ampis"] = 1e-4;
-        j["stop_energy"] = 10;
+        j["w_amips"] = 1e-4;
+        j["stop_energy"] = 100;
         j["smooth_without_envelope"] = false;
         j["num_threads"] = 12;
         j["write_vtu"] = true;
-        j["debug_output"] = true;
+        j["debug_output"] = false;
         j["output"] = "model_" + std::to_string(model_id) + "_out";
 
         fs::path json_path(remeshing_test2_dir / ("remeshing_test2_" + std::to_string(model_id) + ".json"));
