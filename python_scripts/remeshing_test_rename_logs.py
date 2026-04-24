@@ -1,8 +1,7 @@
 from pathlib import Path
 import re
 
-# logs_dir = "/scratch/seb9449/offsets_testing_thingi10k/remeshing_test2_array/bash_scripts/offsets_array/logs"
-logs_dir = "/Users/seb9449/Desktop/offsets-thingi10k-test/test_data/test_logs"
+logs_dir = "/scratch/seb9449/offsets_testing_thingi10k/remeshing_test2_array/bash_scripts/offsets_array/logs"
 
 def parse_filename(s):
     pattern = r"^model_(\d+)_\((\d+)\)$"
