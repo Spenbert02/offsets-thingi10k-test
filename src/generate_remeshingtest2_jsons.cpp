@@ -46,13 +46,21 @@ int main(int argc, char *argv[])
             continue;
         }
 
-        // make oriented obj path
-        fs::path oriented_obj_path(entry.path() / "orient_output" / ("model_" + std::to_string(model_id) + "_oriented.obj"));
-        if (!fs::exists(oriented_obj_path))
+        // // make oriented obj path
+        // fs::path oriented_obj_path(entry.path() / "orient_output" / ("model_" + std::to_string(model_id) + "_oriented.obj"));
+        // if (!fs::exists(oriented_obj_path))
+        // {
+        //     std::cout << std::endl
+        //               << "WARNING: no oriented obj for model " << model_id << std::endl;
+        //     continue;
+        // }
+
+        // make obj path (non oriented)
+        fs::path obj_path(entry.path() / ("model_" + std::to_string(model_id) + ".obj"));
+        if (!fs::exists(obj_path))
         {
             std::cout << std::endl
-                      << "WARNING: no oriented obj for model " << model_id << std::endl;
-            continue;
+                      << "WARNING: no obj for model " << model_id << std::endl;
         }
 
         // create remeshing_test2 dir and json file
@@ -61,7 +69,7 @@ int main(int argc, char *argv[])
         json j;
         j["application"] = "image_simulation";
         json input_array = json::array();
-        input_array.push_back(oriented_obj_path.string());
+        input_array.push_back(obj_path.string());
         j["input"] = input_array;
         j["eps_rel"] = 1e-2;
         j["w_amips"] = 1e-4;
