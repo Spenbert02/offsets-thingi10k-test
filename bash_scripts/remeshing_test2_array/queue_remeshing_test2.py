@@ -24,10 +24,10 @@ def main():
         except:
             print(f"WARNING: non-int model id at {str(subdir)}")
             continue
-
-        input_obj_path = subdir / "orient_output" / f"model_{model_id}_oriented.obj"
+        
+        input_obj_path = subdir / "model_{model_id}.obj"
         if not input_obj_path.exists():
-            print(f"WARNING: no reoriented output for model {model_id}")
+            print(f"WARNING: no obj for model {model_id}")
             continue
 
         output_msh_path = subdir / "remeshing_test2" / f"model_{model_id}_out.msh"
