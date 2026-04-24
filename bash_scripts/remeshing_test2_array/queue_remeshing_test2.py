@@ -25,7 +25,7 @@ def main():
             print(f"WARNING: non-int model id at {str(subdir)}")
             continue
         
-        input_obj_path = subdir / "model_{model_id}.obj"
+        input_obj_path = subdir / f"model_{model_id}.obj"
         if not input_obj_path.exists():
             print(f"WARNING: no obj for model {model_id}")
             continue
