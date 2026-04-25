@@ -53,7 +53,7 @@ def main():
                 f.write(f"{json_path}\n")
         arr_max = len(chunk) - 1
         slurm_script_path = Path(slurm_script_fpath)
-        sbatch_cmd = ["sbatch", f"--array=0-{arr_max}", "--mail-user=seb9449", "--mail-type=BEGIN,END,FAIL,REQUEUE", str(slurm_script_path), str(chunk_file)]
+        sbatch_cmd = ["sbatch", f"--array=0-{arr_max}", "--mail-user=seb9449@nyu.edu", "--mail-type=BEGIN,END,FAIL,REQUEUE", str(slurm_script_path), str(chunk_file)]
         print(f"Submitting chunk {idx+1}/{len(chunks)}: {' '.join(sbatch_cmd)}")
         try:
             subprocess.run(sbatch_cmd, check=True)

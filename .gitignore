@@ -4,3 +4,4 @@ test_data/
 misc.txt
 build/
 bash_scripts/**/logs/
+outputs_to_discuss.txt
