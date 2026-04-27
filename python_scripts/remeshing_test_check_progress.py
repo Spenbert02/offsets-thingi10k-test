@@ -61,6 +61,10 @@ def main():
         
         # case not caught.
         ids["other"].append(model_id)
+    
+    # print output
+    for key, lst in ids.items():
+        print(key, ":", len(lst))
 
 
 if __name__ == "__main__":
