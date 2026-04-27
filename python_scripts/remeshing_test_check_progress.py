@@ -1,0 +1,60 @@
+from pathlib import Path
+
+msh_dir_path = Path("/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes")
+logs_dir_path = Path("/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test2_array/logs")
+
+def get_most_recent_log(model_id):
+    ret_id = 0
+    if not (msh_dir_path / f"model_{model_id}_(0).out").exists():
+        return None
+    else:
+        while (msh_dir_path / f"model_{model_id}_({ret_id + 1}).out").exists():
+            ret_id += 1
+        return ret_id
+
+def main():
+    ids = {}
+    ids["success"] = []
+    ids["seg_fault"] = []
+    ids["bad_energy"]
+    ids["other"] = []
+
+    for model_dir in msh_dir_path.glob("model_*"):
+        if not model_dir.is_dir():
+            continue
+
+        try:
+            model_id = int(model_dir.name.split('_')[1])
+        except ValueError:
+            print(f"WARNING: non-int model id at {str(model_dir)}")
+            continue
+    
+        out_msh_path = model_dir / "remeshing_test2" / f"model_{model_id}_out.msh"
+        if out_msh_path.exists():
+            out_log_path = model_dir / "remeshing_test2" / f"model_{model_id}_out.log"
+            if out_log_path.exists():
+                with open(str(out_log_path), "r") as f:
+                    lines = f.readlines()
+                    energy = float(lines[2][12:])
+                    if energy < 100.0:
+                        ids["success"].append(model_id)
+                        continue
+                    else:
+                        ids["bad_energy"].append(model_id)
+                        continue
+        
+        # load err file to see what went wrong
+        log_num = get_most_recent_log(model_id)
+        if log_num:
+            err_path = logs_dir_path / f"model_{model_id}_({log_num}).err"
+            with open(str(err_path), "r") as f:
+                lines = f.readlines()
+                if "Segmentation fault" in lines[-1]:
+                    ids["seg_fault"].append(model_id)
+        
+        # case not caught.
+        ids["other"].append(model_id)
+
+
+if __name__ == "__main__":
+    main()
