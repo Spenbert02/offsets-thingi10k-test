@@ -41,7 +41,7 @@ def main():
 
     print(f"{successes} models already successfully ran through [remeshing_test2]. {len(jsons_to_run)} models to run.")
     run_list_path = Path(run_list_fpath)
-    with open(run_list_fpath, "r") as f:
+    with open(run_list_fpath, "w") as f:
         for json_path in jsons_to_run:
             f.write(f"{json_path}\n")
     
