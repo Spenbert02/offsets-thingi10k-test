@@ -19,14 +19,20 @@ def main():
     ids["bad_energy"] = []
     ids["other"] = []
 
+    count = 0
+    print(f"progress: {count}\t", end="")
     for model_dir in msh_dir_path.glob("model_*"):
+        count += 1
+        if count % 100 == 0:
+            print(f"\tprogress: {count}\t", end="")
+
         if not model_dir.is_dir():
             continue
 
         try:
             model_id = int(model_dir.name.split('_')[1])
         except ValueError:
-            print(f"WARNING: non-int model id at {str(model_dir)}")
+            print(f"\nWARNING: non-int model id at {str(model_dir)}")
             continue
     
         out_msh_path = model_dir / "remeshing_test2" / f"model_{model_id}_out.msh"
