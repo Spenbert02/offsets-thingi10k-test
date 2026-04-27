@@ -1,6 +1,7 @@
 .python-version
 .vscode/
 test_data/
+interesting_models/
 misc.txt
 build/
 bash_scripts/**/logs/

@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
         j["w_amips"] = 1e-4;
         j["stop_energy"] = 100;
         j["smooth_without_envelope"] = false;
-        j["num_threads"] = 12;
+        j["num_threads"] = 1;
         j["write_vtu"] = true;
         j["debug_output"] = false;
         j["output"] = "model_" + std::to_string(model_id) + "_out";
