@@ -51,6 +51,7 @@ def main():
                 lines = f.readlines()
                 if "Segmentation fault" in lines[-1]:
                     ids["seg_fault"].append(model_id)
+                    continue
         
         # case not caught.
         ids["other"].append(model_id)
