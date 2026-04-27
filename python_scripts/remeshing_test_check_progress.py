@@ -5,10 +5,10 @@ logs_dir_path = Path("/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi1
 
 def get_most_recent_log(model_id):
     ret_id = 0
-    if not (msh_dir_path / f"model_{model_id}_(0).out").exists():
+    if not (logs_dir_path / f"model_{model_id}_(0).out").exists():
         return None
     else:
-        while (msh_dir_path / f"model_{model_id}_({ret_id + 1}).out").exists():
+        while (logs_dir_path / f"model_{model_id}_({ret_id + 1}).out").exists():
             ret_id += 1
         return ret_id
 
@@ -63,6 +63,8 @@ def main():
         ids["other"].append(model_id)
     
     # print output
+    print()
+    print("======= results ========")
     for key, lst in ids.items():
         print(key, ":", len(lst))
 
