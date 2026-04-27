@@ -6,7 +6,7 @@ mesh_dir = "/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
 run_list_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test2_array/pending_jobs.txt"
 slurm_script_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test2_array/remeshing_test2_submit_array.slurm"
 RERUN_ALL = False
-CHUNK_SIZE = 1000
+CHUNK_SIZE = 10000
 
 def main():
     mesh_dir_path = Path(mesh_dir)
