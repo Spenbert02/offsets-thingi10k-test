@@ -16,7 +16,7 @@ def main():
     ids = {}
     ids["success"] = []
     ids["seg_fault"] = []
-    ids["bad_energy"]
+    ids["bad_energy"] = []
     ids["other"] = []
 
     for model_dir in msh_dir_path.glob("model_*"):
