@@ -24,7 +24,7 @@ def main():
     for model_dir in msh_dir_path.glob("model_*"):
         count += 1
         if count % 100 == 0:
-            print(f"\tprogress: {count}\t", end="")
+            print(f"\tprogress: {count}\t", end="", flush=True)
 
         if not model_dir.is_dir():
             continue
