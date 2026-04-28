@@ -9,7 +9,7 @@
 #SBATCH --output=logs/job_%A_%a.out 
 #SBATCH --error=logs/job_%A_%a.err
 
-
+export OMP_NUM_THREADS=1
 
 # UPDATE THIS to match the base directory in your python script
 BASE_DIR="/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
