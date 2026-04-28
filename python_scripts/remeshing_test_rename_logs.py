@@ -3,6 +3,14 @@ import re
 
 logs_dir = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test2_array/logs"
 
+def parse_job_stem(stem):
+    job_re = re.compile(r"^job_(\d+)_(\d+)$")
+    m = job_re.match(stem)
+    if not m:
+        return None
+    else:
+        return int(m.group(1)), int(m.group(2))
+
 def parse_filename(s):
     pattern = r"^model_(\d+)_\((\d+)\)$"
     match = re.match(pattern, s)
@@ -12,9 +20,9 @@ def parse_filename(s):
 
 def get_model_id_from_log(path):
     with open(str(path), "r") as f:
-            for i, line in enumerate(f):
-                if i == 2:
-                    return int(line.split(" ")[2].split(".")[0].split("_")[-1])
+        for i, line in enumerate(f):
+            if i == 2:
+                return int(line.split(" ")[2].split(".")[0].split("_")[-1])
 
 if __name__ == "__main__":
     logs_dir_path = Path(logs_dir)
@@ -35,14 +43,18 @@ if __name__ == "__main__":
     num_tracker = {} # holds max existing num for each model
     for model_id, nums in existing_nums.items():
         num_tracker[model_id] = max(nums)
-    
-    # scan, actually renaming .out files
+
+    job_outs = []
     for p in logs_dir_path.iterdir():
         if not (p.is_file() and p.suffix.lower() == ".out"):
             continue
-        if (p.stem[:5] == "model"):
+        ij = parse_job_stem(p.stem)
+        if ij is None:
             continue
-        
+        job_outs.append((ij[0], ij[1], p))
+    
+    # scan, actually renaming .out files
+    for _, _, p in sorted(job_outs):
         model_id = get_model_id_from_log(p)
         new_num = None
         if model_id in num_tracker:
