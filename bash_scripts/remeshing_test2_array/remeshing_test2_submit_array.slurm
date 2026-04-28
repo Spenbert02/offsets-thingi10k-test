@@ -27,4 +27,4 @@ echo "Processing JSON: $JSON_PATH"
 echo "=========================================="
 
 # Execute offsets
-$WMTK_EXE -j $JSON_PATH
+taskset -c 0 "$WMTK_EXE" -j "$JSON_PATH"

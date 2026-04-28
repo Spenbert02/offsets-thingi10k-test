@@ -7,6 +7,7 @@ run_list_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-t
 slurm_script_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test2_array/remeshing_test2_submit_array.slurm"
 RERUN_ALL = False
 CHUNK_SIZE = 1000
+MAX_CHUNKS = 1
 
 def main():
     mesh_dir_path = Path(mesh_dir)
@@ -47,6 +48,8 @@ def main():
     print(f"Found {num_jobs} [remeshing_test2] jobs to run")
     chunks = [jsons_to_run[i:i + CHUNK_SIZE] for i in range(0, num_jobs, CHUNK_SIZE)]
     for idx, chunk in enumerate(chunks):
+        if idx > (MAX_CHUNKS - 1):
+            continue
         chunk_file = run_list_path.with_name(f"pending_jobs_{idx}.txt")
         with open(chunk_file, "w") as f:
             for json_path in chunk:
