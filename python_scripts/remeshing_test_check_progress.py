@@ -17,7 +17,7 @@ def main():
     ids["success"] = []
     ids["seg_fault"] = []
     ids["bad_energy"] = []
-    ids["timeout"]
+    ids["timeout"] = []
     ids["other"] = []
 
     count = 0
