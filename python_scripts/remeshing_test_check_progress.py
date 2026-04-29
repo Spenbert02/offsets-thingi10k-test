@@ -17,6 +17,7 @@ def main():
     ids["success"] = []
     ids["seg_fault"] = []
     ids["bad_energy"] = []
+    ids["timeout"]
     ids["other"] = []
 
     count = 0
@@ -58,6 +59,8 @@ def main():
                 if "Segmentation fault" in lines[-1]:
                     ids["seg_fault"].append(model_id)
                     continue
+                if "DUE TO TIME LIMIT" in lines[-1]:
+                    ids["timeout"].append(model_id)
         
         # case not caught.
         ids["other"].append(model_id)
