@@ -1,7 +1,7 @@
 from pathlib import Path
 import re
 
-logs_dir = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test2_array/logs"
+logs_dir = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test3_array/logs"
 
 def parse_job_stem(stem):
     job_re = re.compile(r"^job_(\d+)_(\d+)$")
