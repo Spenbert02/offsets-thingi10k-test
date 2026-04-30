@@ -60,7 +60,8 @@ def main():
                 lines = f.readlines()
                 found = False
                 for line in lines:
-                    print(line, "|", end="")
+                    if model_id == 99944:
+                        print(line, "|", end="")
                     if "Segmentation fault" in line:
                         ids["seg_fault"].append(model_id)
                         found = True
