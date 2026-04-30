@@ -20,7 +20,7 @@ def main():
     ids["timeout"] = []
     ids["other"] = []
     ids["OOM"] = []
-    ids["empty_input"]
+    ids["empty_input"] = []
 
     count = 0
     print(f"progress: {count}\t", end="")
