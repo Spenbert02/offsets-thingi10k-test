@@ -19,6 +19,7 @@ def main():
     ids["bad_energy"] = []
     ids["timeout"] = []
     ids["other"] = []
+    ids["OOM"] = []
 
     count = 0
     print(f"progress: {count}\t", end="")
@@ -64,6 +65,10 @@ def main():
                         break
                     if "DUE TO TIME LIMIT" in line:
                         ids["timeout"].append(model_id)
+                        found = True
+                        break
+                    if "OOM Killed" in line:
+                        ids["OOM"].append(model_id)
                         found = True
                         break
                 if found:
