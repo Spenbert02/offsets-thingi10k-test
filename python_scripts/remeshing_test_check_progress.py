@@ -52,16 +52,12 @@ def main():
         
         # load err file to see what went wrong
         log_num = get_most_recent_log(model_id)
-        if model_id == 99944:
-            print(log_num)
-        if log_num:
+        if log_num is not None:
             err_path = logs_dir_path / f"model_{model_id}_({log_num}).err"
             with open(str(err_path), "r") as f:
                 lines = f.readlines()
                 found = False
                 for line in lines:
-                    if model_id == 99944:
-                        print(line, "|", end="")
                     if "Segmentation fault" in line:
                         ids["seg_fault"].append(model_id)
                         found = True
