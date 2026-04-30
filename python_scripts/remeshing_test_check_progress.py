@@ -60,11 +60,11 @@ def main():
                 lines = f.readlines()
                 found = False
                 for line in lines:
-                    if "Segmentation fault" in lines:
+                    if "Segmentation fault" in line:
                         ids["seg_fault"].append(model_id)
                         found = True
                         break
-                    if "DUE TO TIME LIMIT" in lines:
+                    if "DUE TO TIME LIMIT" in line:
                         ids["timeout"].append(model_id)
                         found = True
                         break
