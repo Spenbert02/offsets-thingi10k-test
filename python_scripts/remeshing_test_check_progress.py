@@ -52,6 +52,8 @@ def main():
         
         # load err file to see what went wrong
         log_num = get_most_recent_log(model_id)
+        if model_id == 99944:
+            print(log_num)
         if log_num:
             err_path = logs_dir_path / f"model_{model_id}_({log_num}).err"
             with open(str(err_path), "r") as f:
