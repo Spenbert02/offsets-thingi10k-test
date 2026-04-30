@@ -70,6 +70,9 @@ def main():
     print("======= results ========")
     for key, lst in ids.items():
         print(key, ":", len(lst))
+    print("\t", end="")
+    for id in ids["other"]:
+        print(f" {id},", end="")
 
 
 if __name__ == "__main__":
