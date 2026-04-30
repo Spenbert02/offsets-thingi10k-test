@@ -95,7 +95,10 @@ def main():
     print()
     print("======= results ========")
     for key, lst in ids.items():
+        if key == "other":
+            continue
         print(key, ":", len(lst))
+    print("other", ":", len(ids["other"]))
     print("\t", end="")
     for id in ids["other"]:
         print(f" {id},", end="")
