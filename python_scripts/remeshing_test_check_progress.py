@@ -20,6 +20,7 @@ def main():
     ids["timeout"] = []
     ids["other"] = []
     ids["OOM"] = []
+    ids["empty_input"]
 
     count = 0
     print(f"progress: {count}\t", end="")
@@ -73,6 +74,19 @@ def main():
                         break
                 if found:
                     continue
+        
+        # load out file to check for empty input
+        out_path = logs_dir_path / f"model_{model_id}_({log_num}).out"
+        with open(str(out_path), "r") as f:
+            lines = f.readlines()
+            found = False
+            for line in lines:
+                if ("[error]" in line) and ("Empty Input" in line):
+                    ids["empty_input"].append(model_id)
+                    found = True
+                    break
+            if found:
+                continue
         
         # case not caught.
         ids["other"].append(model_id)
