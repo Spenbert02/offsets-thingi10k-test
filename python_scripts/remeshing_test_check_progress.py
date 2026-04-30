@@ -58,11 +58,17 @@ def main():
             err_path = logs_dir_path / f"model_{model_id}_({log_num}).err"
             with open(str(err_path), "r") as f:
                 lines = f.readlines()
-                if "Segmentation fault" in lines[-1]:
-                    ids["seg_fault"].append(model_id)
-                    continue
-                if "DUE TO TIME LIMIT" in lines[-1]:
-                    ids["timeout"].append(model_id)
+                found = False
+                for line in lines:
+                    if "Segmentation fault" in lines:
+                        ids["seg_fault"].append(model_id)
+                        found = True
+                        break
+                    if "DUE TO TIME LIMIT" in lines:
+                        ids["timeout"].append(model_id)
+                        found = True
+                        break
+                if found:
                     continue
         
         # case not caught.
