@@ -73,6 +73,7 @@ def main():
     print("\t", end="")
     for id in ids["other"]:
         print(f" {id},", end="")
+    print()
 
 
 if __name__ == "__main__":
