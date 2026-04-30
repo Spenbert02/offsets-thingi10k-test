@@ -61,6 +61,7 @@ def main():
                     continue
                 if "DUE TO TIME LIMIT" in lines[-1]:
                     ids["timeout"].append(model_id)
+                    continue
         
         # case not caught.
         ids["other"].append(model_id)
