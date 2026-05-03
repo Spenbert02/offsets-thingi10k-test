@@ -5,7 +5,7 @@ import subprocess
 mesh_dir = "/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
 run_list_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test3_array/pending_jobs.txt"
 slurm_script_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test3_array/remeshing_test3_submit_array.slurm"
-RERUN_ALL = True
+RERUN_ALL = False
 CHUNK_SIZE = 10
 MAX_CHUNKS = 1
 
