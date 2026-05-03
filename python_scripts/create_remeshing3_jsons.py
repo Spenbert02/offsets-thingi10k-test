@@ -31,7 +31,9 @@ def main():
                 "eps_rel": 1e-2,
                 "preserve_topology": False,
                 "stop_energy": 100,
-                "num_threads": 1
+                "num_threads": 1,
+                "output": f"model_{model_id}_out",
+                "w_amips": 1e-4
             }
             with open(json_path, "w") as f:
                 json.dump(json_data, f, indent=4)
