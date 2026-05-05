@@ -2,10 +2,16 @@ from pathlib import Path
 import subprocess
 
 
+ALL = 0  # run every single model
+UNSUCCESSFUL = 1  # run every model that hasn't already succeeded
+UNLOGGED = 2  # run every model that hasn't already been run (based off logs)
+
 mesh_dir = "/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
 run_list_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test3_array/pending_jobs.txt"
 slurm_script_fpath = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test3_array/remeshing_test3_submit_array.slurm"
-RERUN_ALL = False
+logs_dir = "/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test3_array/logs"
+
+RUN_MODE = UNLOGGED
 CHUNK_SIZE = 1000
 MAX_CHUNKS = None
 
@@ -13,9 +19,22 @@ def main():
     mesh_dir_path = Path(mesh_dir)
     if not (mesh_dir_path.exists() and mesh_dir_path.is_dir()):
         raise FileNotFoundError(f"{str(mesh_dir_path)} does not exist")
+    
+    # collect already run models
+    log_dir_path = Path(logs_dir)
+    already_run = set()
+    for p in log_dir_path.iterdir():
+        if not (p.is_file() and p.suffix.lower() == ".out"):
+            continue
+        try:
+            model_id = int(p.stem.split("_")[1])
+        except:
+            print(f"WARNING: non-int-parseable log file at {str(log_dir_path)}")
+            continue
+        already_run.add(model_id)
 
+    # collect jsons
     jsons_to_run = []
-    successes = 0
     for subdir in mesh_dir_path.glob("model_*"):
         if not (subdir.exists() and subdir.is_dir()):
             continue
@@ -25,6 +44,9 @@ def main():
         except:
             print(f"WARNING: non-int model id at {str(subdir)}")
             continue
+
+        if (RUN_MODE == UNLOGGED) and model_id in already_run:
+            continue
         
         input_obj_path = subdir / f"model_{model_id}.obj"
         if not input_obj_path.exists():
@@ -32,8 +54,8 @@ def main():
             continue
 
         output_msh_path = subdir / "remeshing_test3" / f"model_{model_id}_out.msh"
-        if output_msh_path.exists() and not RERUN_ALL:
-            successes += 1
+        if output_msh_path.exists() and (RUN_MODE != ALL):
+            pass
         else:
             json_path = subdir / "remeshing_test3" / f"remeshing_test3_{model_id}.json"
             if not json_path.exists():
@@ -41,7 +63,6 @@ def main():
             else:
                 jsons_to_run.append(str(json_path))
 
-    print(f"{successes} models already successfully ran through [remeshing_test3].")
     run_list_path = Path(run_list_fpath)
     
     num_jobs = len(jsons_to_run)
