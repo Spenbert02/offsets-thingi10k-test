@@ -63,7 +63,8 @@ def main():
             "application": "image_simulation",
             "operation": "resolve_intersections",
             "input": [ str(remesh_out_dir / f"pair_{i}_out.msh") ],
-            "resolve_intersections_tags": [[0, 1]]
+            "resolve_intersections_tags": [["tag_0", "tag_1"]],
+            "output": f"pair_{i}_resolved_out"
         }
         resolve_out_dir = msh_dir_path / f"model_{min_id}" / "pair_resolve_int_test1"
         resolve_out_dir.mkdir(parents=True, exist_ok=True)
