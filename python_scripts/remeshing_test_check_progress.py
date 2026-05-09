@@ -103,7 +103,7 @@ def main():
         print(key, ":", len(lst))
         if key in ["OOM", "timeout", "bad_energy"]:
             for id in ids[key]:
-                print("\t", id)
+                print(f"\t{id},")
     print("other", ":", len(ids["other"]))
     print("\t", end="")
     for id in ids["other"]:
