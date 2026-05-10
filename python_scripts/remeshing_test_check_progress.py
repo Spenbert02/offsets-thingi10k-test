@@ -48,7 +48,7 @@ def main():
                 out_path = logs_dir_path / f"model_{model_id}_({log_num}).out"
                 with open(str(out_path), "r") as f:
                     lines = f.readlines()
-                    energy_line = lines[-1]
+                    energy_line = lines[-2]
                     match = re.search(r"final max energy = ([+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?)", energy_line)
                     if match:
                         final_energy = float(match.group(1))
