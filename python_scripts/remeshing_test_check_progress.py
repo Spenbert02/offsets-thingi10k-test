@@ -1,8 +1,10 @@
 from pathlib import Path
 import re
 
+REMESHING_TEST_NUM = 5
+
 msh_dir_path = Path("/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes")
-logs_dir_path = Path("/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test4_array/logs")
+logs_dir_path = Path(f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test{REMESHING_TEST_NUM}_array/logs")
 
 def get_most_recent_log(model_id):
     ret_id = 0
@@ -40,37 +42,19 @@ def main():
             print(f"\nWARNING: non-int model id at {str(model_dir)}")
             continue
     
-        out_msh_path = model_dir / "remeshing_test4" / f"model_{model_id}_out.msh"
-        if out_msh_path.exists():
-            # load out file to check for final energy
-            log_num = get_most_recent_log(model_id)
-            if log_num is not None:
-                out_path = logs_dir_path / f"model_{model_id}_({log_num}).out"
-                with open(str(out_path), "r") as f:
+        out_msh_path = model_dir / f"remeshing_test{REMESHING_TEST_NUM}" / f"model_{model_id}_out.msh"
+        if out_msh_path.exists():                    
+            out_log_path = model_dir / f"remeshing_test{REMESHING_TEST_NUM}" / f"model_{model_id}_out.log"
+            if out_log_path.exists():
+                with open(str(out_log_path), "r") as f:
                     lines = f.readlines()
-                    energy_line = lines[-2]
-                    match = re.search(r"final max energy = ([+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?)", energy_line)
-                    if match:
-                        final_energy = float(match.group(1))
-                        if final_energy < 100.0:
-                            ids["success"].append(model_id)
-                            continue
-                        else:
-                            ids["bad_energy"].append(model_id)
-                            continue
-
-                    
-            # out_log_path = model_dir / "remeshing_test4" / f"model_{model_id}_out.log"
-            # if out_log_path.exists():
-            #     with open(str(out_log_path), "r") as f:
-            #         lines = f.readlines()
-            #         energy = float(lines[2][12:])
-            #         if energy < 100.0:
-            #             ids["success"].append(model_id)
-            #             continue
-            #         else:
-            #             ids["bad_energy"].append(model_id)
-            #             continue
+                    energy = float(lines[2][12:])
+                    if energy < 100.0:
+                        ids["success"].append(model_id)
+                        continue
+                    else:
+                        ids["bad_energy"].append(model_id)
+                        continue
         
         # load err file to see what went wrong
         log_num = get_most_recent_log(model_id)
@@ -115,7 +99,7 @@ def main():
     
     # print output
     print()
-    print("======= results ========")
+    print(f"======= Remeshing Test {REMESHING_TEST_NUM} results ========")
     for key, lst in ids.items():
         if key == "other":
             continue
