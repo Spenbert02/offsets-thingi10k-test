@@ -125,9 +125,9 @@ def main():
         #     for id in ids[key]:
         #         print(f"\t{id},")
     print("other", ":", len(ids["other"]))
-    # print("\t", end="")
-    # for id in ids["other"]:
-    #     print(f" {id},", end="")
+    print("\t", end="")
+    for id in ids["other"]:
+        print(f" {id},", end="")
     print()
 
 
