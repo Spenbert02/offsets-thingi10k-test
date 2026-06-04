@@ -121,7 +121,7 @@ def main():
         if key == "other":
             continue
         print(key, ":", len(lst))
-        if key in ["OOM"]:
+        if key in ["OOM", "timeout"]:
             for id in ids[key]:
                 print(f"\t{id},")
     print("other", ":", len(ids["other"]))
