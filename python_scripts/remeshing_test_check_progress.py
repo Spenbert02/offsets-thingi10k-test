@@ -1,7 +1,7 @@
 from pathlib import Path
 import re
 
-REMESHING_TEST_NUM = 5
+REMESHING_TEST_NUM = 6
 
 msh_dir_path = Path("/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes")
 logs_dir_path = Path(f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test{REMESHING_TEST_NUM}_array/logs")
