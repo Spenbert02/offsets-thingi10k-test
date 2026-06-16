@@ -6,6 +6,7 @@ REMESHING_TEST_NUM = 6
 ALL = 0  # run every single model
 UNSUCCESSFUL = 1  # run every model that hasn't already succeeded
 UNLOGGED = 2  # run every model that hasn't already been run (based off logs)
+TIMEOUT_OOM = 3
 
 mesh_dir = f"/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes"
 run_list_fpath = f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_test{REMESHING_TEST_NUM}_array/pending_jobs.txt"
@@ -15,6 +16,15 @@ logs_dir = f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/b
 RUN_MODE = UNSUCCESSFUL
 CHUNK_SIZE = 1000
 MAX_CHUNKS = None
+
+def get_most_recent_log(model_id):
+    ret_id = 0
+    if not (Path(logs_dir) / f"model_{model_id}_(0).out").exists():
+        return None
+    else:
+        while (Path(logs_dir) / f"model_{model_id}_({ret_id + 1}).out").exists():
+            ret_id += 1
+        return ret_id
 
 def main():
     mesh_dir_path = Path(mesh_dir)
@@ -37,7 +47,11 @@ def main():
 
     # collect jsons
     jsons_to_run = []
-    for subdir in mesh_dir_path.glob("model_*"):
+    print("0", end="")  # terminal comms
+    for i, subdir in enumerate(mesh_dir_path.glob("model_*")):
+        if i % 100 == 0:  # terminal comms
+            print(f"\r{i}\t", end="")
+
         if not (subdir.exists() and subdir.is_dir()):
             continue
 
@@ -57,7 +71,28 @@ def main():
 
         output_msh_path = subdir / f"remeshing_test{REMESHING_TEST_NUM}" / f"model_{model_id}_out.msh"
         if output_msh_path.exists() and (RUN_MODE != ALL):
-            pass
+            continue
+
+        if RUN_MODE == TIMEOUT_OOM:
+            log_num = get_most_recent_log(model_id)
+            if log_num is not None:
+                err_path = Path(logs_dir) / f"model_{model_id}_({log_num}).err"
+                with open(str(err_path), "r") as f:
+                    lines = f.readlines()
+                    include = False
+                    for line in lines:
+                        if "DUE TO TIME LIMIT" in line:
+                            include = True
+                            break
+                        if "OOM Killed" in line:
+                            include = True
+                            break
+                    if include:
+                        json_path = subdir / f"remeshing_test{REMESHING_TEST_NUM}" / f"remeshing_test{REMESHING_TEST_NUM}_{model_id}.json"
+                        if not json_path.exists():
+                            print(f"WARNING: json {str(json_path)} does not exist")
+                        else:
+                            jsons_to_run.append(str(json_path))
         else:
             json_path = subdir / f"remeshing_test{REMESHING_TEST_NUM}" / f"remeshing_test{REMESHING_TEST_NUM}_{model_id}.json"
             if not json_path.exists():
