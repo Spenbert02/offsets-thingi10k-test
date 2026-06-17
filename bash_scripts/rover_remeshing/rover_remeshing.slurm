@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=128G
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --account=torch_pr_870_general
 #SBATCH --output=logs/rover_remeshing.out 
 #SBATCH --error=logs/rover_remeshing.err
