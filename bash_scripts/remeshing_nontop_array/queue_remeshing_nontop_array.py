@@ -11,7 +11,7 @@ run_list_fpath = f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-
 slurm_script_fpath = f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_nontop_array/remeshing_nontop_submit_array.slurm"
 logs_dir = f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi10k-test/bash_scripts/remeshing_nontop_array/logs"
 
-RUN_MODE = ALL
+RUN_MODE = UNLOGGED
 CHUNK_SIZE = 1000
 MAX_CHUNKS = None
 
