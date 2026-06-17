@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=16G
-#SBATCH --time=1:00:00
+#SBATCH --time=4:00:00
 #SBATCH --account=torch_pr_870_general
 #SBATCH --output=logs/model_106830_debug.out 
 #SBATCH --error=logs/model_106830_debug.err
