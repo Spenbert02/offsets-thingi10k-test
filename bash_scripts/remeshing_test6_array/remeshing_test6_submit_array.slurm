@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=remeshing_test5_sweep1
+#SBATCH --job-name=rmsh6_explicit
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=128G
-#SBATCH --time=48:00:00
+#SBATCH --mem=32G
+#SBATCH --time=12:00:00
 #SBATCH --account=torch_pr_870_general
 #SBATCH --output=logs/job_%A_%a.out 
 #SBATCH --error=logs/job_%A_%a.err
