@@ -102,7 +102,7 @@ slurm_script_fpath = f"/scratch/seb9449/offsets_testing_thingi10k/offsets-thingi
 def main():
     jsons_to_run = []
     for model_id in model_ids:
-        json_path = Path(mesh_dir) / f"model_{model_id}" / f"remeshing_test{REMESHING_TEST_NUM}" / f"remeshing_test{REMESHING_TEST_NUM}_{model_id}.json"
+        json_path = Path(mesh_dir) / f"model_{model_id}" / f"remeshing_test{REMESHING_TEST_NUM}" / f"remeshing_test{REMESHING_TEST_NUM}_explicit_{model_id}.json"
         if not json_path.exists():
             print(f"WARNING: json {str(json_path)} does not exist")
         else:
