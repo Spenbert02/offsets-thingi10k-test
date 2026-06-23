@@ -125,8 +125,9 @@ def main():
         #         print(f"\t{id},")
     print("other", ":", len(ids["other"]))
     print("\t", end="")
-    # for id in ids["other"]:
-    #     print(f" {id},", end="")
+    for i, id in enumerate(ids["other"]):
+        if i < 10:
+            print(f" {id},", end="")
     print()
 
 
