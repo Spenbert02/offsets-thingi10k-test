@@ -126,7 +126,7 @@ def main():
     print("other", ":", len(ids["other"]))
     print("\t", end="")
     for i, id in enumerate(ids["other"]):
-        if i < 10:
+        if i < 50:
             print(f" {id},", end="")
     print()
 
