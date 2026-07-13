@@ -36,13 +36,12 @@ def main():
                     res_dict[key] = json_dict[key]
                 results[model_id] = res_dict
     
-    print(results)
-
     # print results
     for model_id, res_dict in results:
-        print(f"model {model_id}:")
-        for key, val in res_dict:
-            print(f"\t{key}: {val}")
+        print(res_dict)
+        # print(f"model {model_id}:")
+        # for key, val in res_dict:
+        #     print(f"\t{key}: {val}")
 
 if __name__ == "__main__":
     main()
