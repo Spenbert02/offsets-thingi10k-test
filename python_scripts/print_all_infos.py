@@ -37,11 +37,10 @@ def main():
                 results[model_id] = res_dict
     
     # print results
-    for model_id, res_dict in results:
-        print(res_dict)
-        # print(f"model {model_id}:")
-        # for key, val in res_dict:
-        #     print(f"\t{key}: {val}")
+    for model_id, res_dict in results.items():
+        print(f"model {model_id}:")
+        for key, val in res_dict.items():
+            print(f"\t{key}: {val}")
 
 if __name__ == "__main__":
     main()
