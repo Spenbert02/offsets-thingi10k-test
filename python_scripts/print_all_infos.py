@@ -3,6 +3,10 @@ import json
 
 msh_dir_path = Path("/scratch/seb9449/offsets_testing_thingi10k/tagged_tet_mshes")
 subdir = "wmtk_tetwild_test"
+def model_name(model_id_):
+    return f"model_{model_id_}_out_final.msh"
+def report_name(model_id_):
+    return f"model_{model_id_}_out_report.json"
 
 def main():
     results = dict()
@@ -22,9 +26,9 @@ def main():
             print(f"\nWARNING: non-int model id at {str(model_dir)}")
             continue
 
-        out_msh_path = model_dir / subdir / f"model_{model_id}_out.msh"
+        out_msh_path = model_dir / subdir / model_name(model_id)
         if out_msh_path.exists():
-            results_json_path = Path(model_dir / subdir / f"model_{model_id}_out_report.json")
+            results_json_path = Path(model_dir / subdir / report_name(model_id))
             with open(results_json_path, "r") as f:
                 json_dict = json.load(f)
                 res_dict = dict()
