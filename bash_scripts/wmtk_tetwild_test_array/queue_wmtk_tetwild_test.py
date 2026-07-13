@@ -81,9 +81,11 @@ def main():
         if (RUN_MODE == UNLOGGED) and model_id in already_run:
             continue
 
-        if (RUN_MODE == EXPLICIT) and model_id in explicit_ids:
-            add_model_to_jsons(model_id, subdir)
+        if (RUN_MODE == EXPLICIT):
+            if model_id in explicit_ids:
+                add_model_to_jsons(model_id, subdir)
             continue
+
         
         input_obj_path = subdir / f"model_{model_id}.obj"
         if not input_obj_path.exists():
