@@ -36,6 +36,8 @@ def main():
                     res_dict[key] = json_dict[key]
                 results[model_id] = res_dict
     
+    print(results)
+
     # print results
     for model_id, res_dict in results:
         print(f"model {model_id}:")
