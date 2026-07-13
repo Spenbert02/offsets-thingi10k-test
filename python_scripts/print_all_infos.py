@@ -41,3 +41,6 @@ def main():
         print(f"model {model_id}:")
         for key, val in res_dict:
             print(f"\t{key}: {val}")
+
+if __name__ == "__main__":
+    main()
